@@ -3,17 +3,15 @@ const mongoose = require("mongoose");
 const divisionSchema = new mongoose.Schema(
   {
     name: {
-      type: String, // Tên bộ phận
+      type: String, 
       required: [true, "Name is required"],
     },
     quantity: {
-      // Số lượng nhân viên trong bộ phận
       type: Number,
       default: 0,
     },
-    desc: String, // Mô tả bộ phận
+    desc: String, 
     leader: {
-      // Mã nhân viên làm DM
       type: mongoose.Schema.ObjectId,
       ref: "User",
     },

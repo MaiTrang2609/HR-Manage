@@ -3,13 +3,12 @@ const mongoose = require("mongoose");
 const roomSchema = new mongoose.Schema(
   {
     name: {
-      // Tên phòng
       type: String,
       required: [true, "Please tell us your name"],
     },
 
-    color: String, // Màu sắc
-    quantity: Number, // Số lượng
+    color: String,
+    quantity: Number, 
   },
   {
     timestamps: true,

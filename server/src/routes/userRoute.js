@@ -31,7 +31,7 @@ router.get(
 ); // Lấy user theo division
 
 ////////////
-router.get("/annual-leave", userController.getListUserOfAnnualLeave); // Lấy user chưa có lịch nghỉ để thêm lịch nghỉ
+router.get("/annual-leave", userController.getListUserOfAnnualLeave);
 
 router.route("/").post(userController.createUser);
 

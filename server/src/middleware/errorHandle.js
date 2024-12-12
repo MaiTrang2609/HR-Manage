@@ -1,10 +1,4 @@
 const AppError = require("../utils/appError");
-
-// Phần này config cho tất cả các api lỗi nều trả dưới dạng
-// json : {
-//   status: "error",
-//     message: err.message,
-// }
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "Internal Server Error";

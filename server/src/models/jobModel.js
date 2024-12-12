@@ -3,22 +3,21 @@ const mongoose = require("mongoose");
 const jobSchema = new mongoose.Schema(
   {
     title: {
-      type: String, // Tiểu đề ứng tuyển
+      type: String,
       required: [true, "Please tell us your title"],
     },
-    offer: String, // tiền offer
+    offer: String, 
     address: {
-      // Vị trí làm việc
       type: String,
       default: "Hà Nội City",
     },
-    experience: String, // Kinh nghiệm
-    deadline: Date, // Hạn
-    position: String, // Vị trí ứng tuyển
-    quantity: Number, // Số lượng cần ứng tuyển
-    desc: String, // Mô tả
-    type: String, // Hình thức công việc
-    require: String, // Hình thức công việc
+    experience: String, 
+    deadline: Date, 
+    position: String, 
+    quantity: Number, 
+    desc: String, 
+    type: String, 
+    require: String, 
   },
   {
     timestamps: true,

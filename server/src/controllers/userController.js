@@ -94,7 +94,7 @@ const userController = {
   getUser: factory.getOneById(User),
 
   // Khi tạo user
-  // Thì tìm bộ phận người đó đc tạo  (Ko có div thì tạo thôi mà mặc kệ logic ở dưới)
+  // Thì tìm bộ phận người đó đc tạo
   // Nếu bộ phận đó chưa có leader : Người dùng có có role là DM thì cập nhật bộ phận đó với leader là người đang đc khởi tạo
   // Bộ phận đó có leader : Vẫn như trên nhưng thêm bước là tìm leader cũ của bộ phận rồi set division của người đó thành null
   // Cuối cùng là tạo user
@@ -144,9 +144,8 @@ const userController = {
     });
   }),
 
-  // Cập nhât user (Ko có div thì cứ update bình thường)
+  // Cập nhât user
   // Nếu đổi role mà ko đổi division và role ban đầu là DM thì division ấy phải đổi leader thành null
-
   // Nếu đổi division mà role là DM
   // Thì như trên division cũ có leader thành null
   // Division mới mà chưa có leadder thì cập nhật leader
@@ -255,7 +254,6 @@ const userController = {
     }
   }),
 
-  // Phần này làm chắc cú hơn tạo 1 phiên giao dịch session (Kiểu ko có lỗi thì ok , lỗi thì nó roll back lại ban đầu)
   // Khi xóa user : thì  phòng  ban của user sẽ trừ 1
   // User đó mà là DM thì  phòng ban đó sẽ cập nhật leader thành null
   deleteUser: catchAsync(async (req, res, next) => {

@@ -3,28 +3,28 @@ const mongoose = require("mongoose");
 const timeOffSchema = new mongoose.Schema(
   {
     title: {
-      type: String, // Tiêu đề
+      type: String, 
       required: [true, "Please tell us your title"],
     },
-    desc: String, // Mô tả
-    day: String, // Ngày nghỉ
-    timeStart: String, // Ca nghỉ
-    timeEnd: String, // Ca nghỉ
+    desc: String, 
+    day: String, 
+    timeStart: String, 
+    timeEnd: String,
 
     annualLeave: {
-      type: mongoose.Schema.ObjectId, // Thuộc của người nào
+      type: mongoose.Schema.ObjectId, 
       ref: "AnnualLeave",
     },
     userRequest: {
-      type: mongoose.Schema.ObjectId, // Người đề xuất
+      type: mongoose.Schema.ObjectId, 
       ref: "User",
     },
     userAccept: {
-      type: mongoose.Schema.ObjectId, // Người chấp thuận
+      type: mongoose.Schema.ObjectId, 
       ref: "User",
     },
     status: {
-      type: String, // Trạng thái
+      type: String, 
       default: "pending",
       enum: ["pending", "accept", "reject"],
     },

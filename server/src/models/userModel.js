@@ -48,17 +48,13 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.index({ nickName: 1 }); // Nick name chỉ có 1
+userSchema.index({ nickName: 1 }); 
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
   this.password = await bcrypt.hash(this.password, 12); // hash mật khẩu
-
-  // this.passwordConfirm = undefined;
-  // const nickName = handleGetNickName(this.name);
-  // this.nickName = slugify(nickName, { lower: true });
 });
 
 userSchema.pre("save", function (next) {
@@ -77,7 +73,6 @@ userSchema.pre("findOneAndUpdate", async function (next) {
 });
 
 // Kiểm tra thời gian đổi mật khẩu và thời gian mã hóa ,
-// mục tiêu nếu tk đăng nhập ở 2 nơi , thì nơi A đổi mk thì nơi B phải đăng nhập lại
 userSchema.methods.changesPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(

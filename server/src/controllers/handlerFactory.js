@@ -1,14 +1,5 @@
 const catchAsync = require("./../middleware/catchAsync");
 const AppError = require("./../utils/appError");
-
-// Phần này dành các controller common cho các hàm đơn giản
-
-// Model ỏ đây là đại diện cho table : user, division...
-
-// req.body : nội dung truyền lên
-
-//  req.params : các biển trên params ở api
-
 const handlerFactory = {
   // Tạo dữ liệu
   createOne: (Model) =>
@@ -21,7 +12,7 @@ const handlerFactory = {
       });
     }),
 
-  // tìm dữ liệu theo type ở đây có thể là name....
+  // tìm dữ liệu theo type
   getOne: (Model, type) =>
     catchAsync(async (req, res, next) => {
       let query = Model.findOne({ [type]: req.params.id });
@@ -43,7 +34,7 @@ const handlerFactory = {
     catchAsync(async (req, res, next) => {
       let query = Model.findById(req.params.id);
 
-      if (popOptions) query = query.populate(popOptions); // Phần này cho việc nối bảng...
+      if (popOptions) query = query.populate(popOptions); // Nối bảng
 
       const data = await query;
 

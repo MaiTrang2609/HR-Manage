@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const CVSchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.ObjectId, // Ứng cử viên
+      type: mongoose.Schema.ObjectId,
       ref: "User",
     },
 
     url: {
-      type: String, // Link cv
+      type: String, 
       required: [true, "CV is required"],
     },
 
     job: {
-      type: mongoose.Schema.ObjectId, // Công việc ứng tuyển
+      type: mongoose.Schema.ObjectId, 
       ref: "Job",
     },
 

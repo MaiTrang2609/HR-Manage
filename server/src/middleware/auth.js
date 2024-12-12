@@ -3,13 +3,11 @@ const catchAsync = require("./catchAsync");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-// Fuction này thì đa số chạy sau function ở dưới (Kiểm tra quyền của user)
-// Đầu vào là các roles được phép truy cập
-// vì đây là 1 dạng fuction chạy trc fuction chính nên next() - thỏa mãn điều kiện chạy luôn vào fuction chính
+// Kiểm tra quyền của user
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
-    // Nếu là admin thì vô đối
+
     if (req.user.position?.role === "admin") {
       return next();
     }
@@ -43,7 +41,7 @@ exports.isAuthenticatedUser = catchAsync(async (req, res, next) => {
     select: "role",
   });
 
-  // Không có chứng tỏ user đã bị xóa ....
+  // Không có chứng tỏ user đã bị xóa
   if (!currentUser) {
     return next(
       new AppError(
@@ -52,7 +50,7 @@ exports.isAuthenticatedUser = catchAsync(async (req, res, next) => {
       )
     );
   }
-  // Phần này kiểm tra khoảng thời gian user đổi pass có thỏa mãn ko
+  // Kiểm tra khoảng thời gian user đổi pass có thỏa mãn ko
   if (currentUser.changesPasswordAfter(decoded.iat)) {
     return next(
       new AppError("User recently changed password! Please log in again!", 401)

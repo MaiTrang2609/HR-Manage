@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 const payCheckSchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.ObjectId, // Nhân viên
+      type: mongoose.Schema.ObjectId,
       ref: "User",
     },
-    gross: Number, // Tổng thu nhập
-    insurance: Number, // bảo hiểm
-    tax: Number, // Tiền hỗ trợ
-    net: Number, // Tiền thực nhận,
-    day: Date, // Ngày tháng nhận lương
+    gross: Number, 
+    insurance: Number, 
+    tax: Number, 
+    net: Number, 
+    day: Date,
   },
   {
     timestamps: true,

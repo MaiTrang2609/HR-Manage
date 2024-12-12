@@ -3,13 +3,11 @@ const mongoose = require("mongoose");
 const positionSchema = new mongoose.Schema(
   {
     title: {
-      // Viết tắt tên vị trí
       type: String,
       required: [true, "Please tell us your title"],
     },
-    name: String, // Tên vị trí
+    name: String, 
     role: {
-      // Danh sách quyền tương ứng
       type: String,
       enum: ["admin", "hr", "dm", "pm", "employee", "outsite"],
     },

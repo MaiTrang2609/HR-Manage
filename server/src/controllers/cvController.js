@@ -23,12 +23,12 @@ const CVController = {
       .skip(skip)
       .limit(pageSize)
       .populate({
-        // Nối bảng job để lấy title và dealline của job
+        // Nối bảng job
         path: "job",
         select: "title deadline",
       })
       .populate({
-        // Nối bản user ddeer lấy name, email , phone của user
+        // Nối bản user
         path: "user",
         select: "name email phone",
       });

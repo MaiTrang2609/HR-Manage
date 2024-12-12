@@ -43,7 +43,6 @@ const payCheckController = {
   }),
 
   // Tương tự trên nhưng có thêm bộ lọc user : id của người đang đăng nhập
-
   getMyPayCheck: catchAsync(async (req, res, next) => {
     let data = {};
     const total = await PayCheck.countDocuments({ user: req.user?._id }); //

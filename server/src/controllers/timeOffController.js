@@ -40,9 +40,6 @@ const timeOffController = {
   }),
 
   // Lấy danh sách time off của user thông qua bộ lọc userAccept : id của user trên params
-
-  // Cái này dành cho DM quản lý danh sách time off của bộ phận mình
-
   getListTimeOffRequest: catchAsync(async (req, res, next) => {
     const total = await TimeOff.countDocuments({ userAccept: req.user?._id });
 

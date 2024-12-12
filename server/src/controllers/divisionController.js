@@ -36,7 +36,7 @@ const divisionController = {
     });
   }),
 
-  // Đầu tiên tìm bộ phận mình muốn thay đổi
+  // Tìm bộ phận mình muốn thay đổi
   // Nếu leader hiện tại khác leadr mới
   // Leader cũ sẽ phải cập nhật division thành null
   // leader mới cập nhật diviso thành division đang muốn cập nhật
@@ -49,8 +49,8 @@ const divisionController = {
     }
 
     if (oldDivision.leader !== req.body.leader) {
-      const oldLeader = await User.findById(oldDivision.leader); // Thằng cũ
-      const newLeader = await User.findById(req.body.leader); // Thằng mới
+      const oldLeader = await User.findById(oldDivision.leader);
+      const newLeader = await User.findById(req.body.leader); 
 
       if (!oldLeader || !newLeader) {
         return next(new AppError("User not found", 404));

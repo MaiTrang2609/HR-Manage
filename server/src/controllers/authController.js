@@ -42,7 +42,6 @@ const authController = {
   }),
 
   // Đăng kí , tạo thành tk của ứng cử viên
-
   signup: catchAsync(async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -56,7 +55,6 @@ const authController = {
 
   // Hàm tạo access token thông qua refresh token
   requestRefreshToken: catchAsync(async (req, res, next) => {
-    // Thêm console.log để debug
     console.log("Cookie received:", req.cookies);
     
     const refreshToken = req.cookies.refreshToken;
