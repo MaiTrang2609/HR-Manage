@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/" element={<DashBoard />} />
         <Route exact path="/Profile" element={<Profile />} />
 
-        <Route element={<ProtectedRoute roles={["admin"]} />}>
+        <Route element={<ProtectedRoute roles={["admin", "hr"]} />}>
           <Route exact path="/room" element={<Room />} />
           <Route exact path="/room/:action" element={<RoomInfo />} />
           <Route exact path="/room/:action/:id" element={<RoomInfo />} />
@@ -85,7 +85,7 @@ function App() {
           />
         </Route>
 
-        <Route element={<ProtectedRoute roles={["dm", "hr"]} />}>
+        <Route element={<ProtectedRoute roles={["dm"]} />}>
           <Route exact path="/user" element={<User />} />
           <Route exact path="/user/:action" element={<UserInfo />} />
           <Route exact path="/user/:action/:id" element={<UserInfo />} />

@@ -48,6 +48,7 @@ function JobList() {
   };
 
   useEffect(() => {
+    console.log('eee')
     getLitJob(page, limit, keyWord);
   }, []);
 

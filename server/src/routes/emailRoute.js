@@ -3,7 +3,7 @@ const { isAuthenticatedUser, restrictTo } = require("../middleware/auth");
 const router = require("express").Router();
 
 router.use(isAuthenticatedUser); // Kiểm tra người dùng đã đăng nhập chưa
-// router.use(restrictTo("hr", "admin")); // Người dùng phải có quyền là hr, admin
+router.use(restrictTo("hr", "admin")); // Người dùng phải có quyền là hr, admin
 
 router.route("/send-email").post(EmailController.sendMail); // Gủi đi email
 

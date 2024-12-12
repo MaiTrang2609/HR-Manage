@@ -36,7 +36,6 @@ const divisionController = {
     });
   }),
 
-  // Phần nãy cũng đau đầu
   // Đầu tiên tìm bộ phận mình muốn thay đổi
   // Nếu leader hiện tại khác leadr mới
   // Leader cũ sẽ phải cập nhật division thành null

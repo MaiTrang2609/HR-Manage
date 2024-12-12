@@ -3,7 +3,7 @@ const { isAuthenticatedUser, restrictTo } = require("../middleware/auth");
 const router = require("express").Router();
 
 router.use(isAuthenticatedUser);
-// router.use(restrictTo("admin"));
+router.use(restrictTo("admin"));
 
 router
   .route("/")

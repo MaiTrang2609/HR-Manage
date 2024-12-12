@@ -144,7 +144,6 @@ const userController = {
     });
   }),
 
-  // Phần này khá là đau đầu
   // Cập nhât user (Ko có div thì cứ update bình thường)
   // Nếu đổi role mà ko đổi division và role ban đầu là DM thì division ấy phải đổi leader thành null
 

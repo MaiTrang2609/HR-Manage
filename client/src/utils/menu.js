@@ -84,42 +84,36 @@ export const menuHRList = [
   },
   {
     key: 2,
-    label: "User",
-    path: "/user",
-    icon: <UserOutlined />,
-  },
-  {
-    key: 3,
     label: "Job",
     path: "/job",
     icon: <PartitionOutlined />,
   },
   {
-    key: 4,
+    key: 3,
     label: "CV",
     path: "/cv",
     icon: <FilePdfOutlined />,
   },
   {
-    key: 5,
+    key: 4,
     label: "Annual Leave",
     path: "/my-annual-leave",
     icon: <ScheduleOutlined />,
   },
   {
-    key: 6,
+    key: 5,
     label: "Pay check",
     path: "/my-pay-check",
     icon: <DollarOutlined />,
   },
   {
-    key: 7,
+    key: 6,
     label: "Mail",
     path: "/email",
     icon: <MailOutlined />,
   },
   {
-    key: 8,
+    key: 7,
     label: "Statistica",
     path: "/statistica",
     icon: <BarChartOutlined />,
@@ -127,12 +121,6 @@ export const menuHRList = [
 ];
 
 export const menuOnsiteList = [
-  {
-    key: 1,
-    label: "Home",
-    path: "/",
-    icon: <HomeOutlined />,
-  },
   {
     key: 2,
     label: "Job",
