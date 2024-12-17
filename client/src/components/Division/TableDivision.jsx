@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { deleteDoc } from "../../api/commonApi";
+import { deleteDoc, getListDoc } from "../../api/commonApi";
 
 function TableDivision({
   data,
@@ -18,6 +18,7 @@ function TableDivision({
   const [isVisible, setIsVisible] = useState(false);
   const [isDisableButton, setIsDisableButton] = useState(false);
   const [division, setDivision] = useState(null);
+  const [users, setUsers] = useState([]);
 
   const handleActionDivision = (id, action) => {
     navigate(`/division/${action}/${id}`);
@@ -39,6 +40,24 @@ function TableDivision({
     setIsVisible(false);
     setIsDisableButton(false);
   };
+  useEffect(() => {
+    const payload = {
+      page: 1,
+      limit: 99999,
+      search: ''
+    };
+
+    const fetchUsers = async () => {
+      try {
+        const fetchedUsers = await getListDoc("user", payload);
+        setUsers(fetchedUsers?.data?.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const columns = [
     {
@@ -53,6 +72,11 @@ function TableDivision({
     {
       title: "Quantity",
       dataIndex: "quantity",
+      render: (_, record) => {
+        // Lọc users có division khớp với id của division
+        const userCount = users?.filter(user => user.division?._id === record?._id).length;
+        return <>{userCount}</>;
+      },
     },
     {
       title: "Action",

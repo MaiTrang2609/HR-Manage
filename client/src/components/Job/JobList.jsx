@@ -48,7 +48,6 @@ function JobList() {
   };
 
   useEffect(() => {
-    console.log('eee')
     getLitJob(page, limit, keyWord);
   }, []);
 
@@ -66,6 +65,7 @@ function JobList() {
         className="input-search"
         onChange={handleSearch}
       />
+      
       {loading ? (
         <Loading />
       ) : (

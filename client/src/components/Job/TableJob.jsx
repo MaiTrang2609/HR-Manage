@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Table } from "antd";
+import React, { useState, useEffect } from "react";
+import { Modal, Table, Switch } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   DeleteOutlined,
@@ -7,7 +7,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import { deleteDoc } from "../../api/commonApi";
+import { deleteDoc, updateDoc } from "../../api/commonApi";
 import { getUser } from "../../utils/auth";
 
 function TableJob({
@@ -20,12 +20,27 @@ function TableJob({
   getLitJob,
 }) {
   const navigate = useNavigate();
-
   const role = getUser()?.role;
-
   const [isVisible, setIsVisible] = useState(false);
   const [isDisableButton, setIsDisableButton] = useState(false);
   const [job, setJob] = useState(null);
+  const [jobData, setJobData] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      const updatedData = data.map((job) => ({
+        ...job,
+        status: isJobExpired(job.deadline)
+          ? "expired"
+          : job.status || "notExpired",
+      }));
+      setJobData(updatedData);
+    }
+  }, [data]);
+
+  const isJobExpired = (deadline) => {
+    return moment(deadline).isBefore(moment(), "day");
+  };
 
   const handleActionJob = (id, action) => {
     role === "candidate"
@@ -38,16 +53,54 @@ function TableJob({
       await deleteDoc("job", job?._id);
       getLitJob();
       onCancel();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error deleting job:", error);
+    }
+  };
+
+  const handleStatusChange = async (checked, record) => {
+    const newStatus = checked ? "notExpired" : "expired";
+    try {
+      await updateDoc("job", record._id, { status: newStatus });
+      const updatedData = jobData.map((item) =>
+        item._id === record._id ? { ...item, status: newStatus } : item
+      );
+      setJobData(updatedData);
+      getLitJob();
+    } catch (error) {
+      console.error("Error updating job status:", error);
+    }
   };
 
   const onSubmitDelete = () => {
     setIsDisableButton(true);
     handleDelete();
   };
+
   const onCancel = () => {
     setIsVisible(false);
     setIsDisableButton(false);
+  };
+
+  const renderStatus = (status) => {
+    const color = status === "expired" ? "rgb(220 68 68)" : "rgb(22 163 74)";
+    return (
+      <div
+        className="status-job"
+        style={{
+          backgroundColor: color,
+          textAlign: "center",
+          borderRadius: "4px",
+          color: "white",
+          textTransform: "capitalize",
+          fontWeight: "600",
+          padding: "0.35rem 1rem",
+          width: "100%",
+        }}
+      >
+        {status === "expired" ? "Expired" : "Active"}
+      </div>
+    );
   };
 
   const columns = [
@@ -73,6 +126,11 @@ function TableJob({
       render: (text) => <>{moment(text).format("DD-MM-YYYY")}</>,
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => renderStatus(text),
+    },
+    {
       title: "Action",
       render: (props) => (
         <div className="action-button-table">
@@ -85,7 +143,6 @@ function TableJob({
                   handleActionJob(props._id, "edit");
                 }}
               />
-
               <DeleteOutlined
                 className="delete-button-table mr-1"
                 onClick={(e) => {
@@ -108,15 +165,9 @@ function TableJob({
                   });
             }}
           />
-          {/* <MenuOutlined
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/cv/${props._id}`);
-            }}
-          /> */}
         </div>
       ),
-      width: "10%",
+      width: "15%",
     },
   ];
 
@@ -130,14 +181,14 @@ function TableJob({
         okButtonProps={{ disabled: isDisableButton }}
       >
         <p>
-          Bạn muốn xóa công việc: <strong>{job?.name}</strong>?
+          Bạn muốn xóa công việc: <strong>{job?.title}</strong>?
         </p>
       </Modal>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={jobData}
         pagination={{ current: page, pageSize: limit, total }}
-        loading={false}
+        loading={loading}
         onChange={handlePagination}
         bordered
         scroll={{ x: "max-content" }}

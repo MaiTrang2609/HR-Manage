@@ -4,25 +4,34 @@ import JobDetail from "./JobDetail";
 import UploadCv from "./UploadCv";
 
 function Job({ data }) {
+  const today = new Date(); // Ngày hiện tại
+
   return (
     <Wrapper>
-      {data?.map((item) => (
-        <div className="job">
-          <div className="title">{item?.title}</div>
+      {data?.map((item) => {
+        const isExpired = new Date(item?.deadline) < today; // Check quá hạn
 
-          <div className="desc mt-auto">Số lượng tuyển: {item?.quantity}</div>
-          <div className="desc">
-            Hình thức:
-            <span>{item?.type}</span>
-          </div>
-          <div className="desc">Kinh nghiệm: {item?.experience}</div>
+        return (
+          <div className={`job ${isExpired ? "job-disable" : ""}`} key={item?._id}>
+            <div className="title">{item?.title}</div>
 
-          <div className="button">
-            <JobDetail id={item?._id} />
-            <UploadCv job={item} />
+            <div className="desc mt-auto">Số lượng tuyển: {item?.quantity}</div>
+
+            <div className="desc">
+              Hình thức: <span>{item?.type}</span>
+            </div>
+
+            <div className="desc">Kinh nghiệm: {item?.experience}</div>
+
+            <div className="desc">Deadline: {item?.deadline}</div>
+
+            <div className="button">
+              {!isExpired && <JobDetail id={item?._id} />}
+              {!isExpired && <UploadCv job={item} />}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </Wrapper>
   );
 }
@@ -33,7 +42,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-left: -2.5rem;
-
+  .job-disable {
+  background-color: #eeeeee !important;
+  }
   .job {
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

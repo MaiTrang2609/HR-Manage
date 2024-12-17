@@ -18,6 +18,11 @@ const jobSchema = new mongoose.Schema(
     desc: String, 
     type: String, 
     require: String, 
+    status: {
+      type: String,
+      default: "notExpired",
+      enum: ["expired", "notExpired"],
+    }, // Trạng thái
   },
   {
     timestamps: true,

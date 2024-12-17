@@ -122,6 +122,12 @@ export const menuHRList = [
 
 export const menuOnsiteList = [
   {
+    key: 1,
+    label: "Home",
+    path: "/",
+    icon: <HomeOutlined />,
+  },
+  {
     key: 2,
     label: "Job",
     path: "/job-candidate",

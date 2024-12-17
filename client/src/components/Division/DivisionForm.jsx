@@ -22,6 +22,8 @@ function DivisionForm() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [listUser, setListUser] = useState([]);
+  const [divisionUsers, setDivisionUsers] = useState([]);
+  const [userCount, setUserCount] = useState(0);
 
   const handleSubmit = (data) => {
     action === "add" ? handleAddDivision(data) : handleEditDivision(data);
@@ -52,17 +54,37 @@ function DivisionForm() {
     }
   };
 
-  const getLitUser = async () => {
-    const result = await getListDoc("user");
-    setListUser(result?.data?.data);
+  const getLitUser = async (id) => {
+    const payload = {
+      page: 1,
+      limit: 99999,
+      search: ''
+    };
+
+    try {
+      const result = await getListDoc("user", payload);
+      const users = result?.data?.data;
+      setListUser(users);
+
+      if (id) {
+        const usersInDivision = users.filter(user => user?.division?._id === id);
+        console.log(usersInDivision)
+        setDivisionUsers(usersInDivision);
+        setUserCount(usersInDivision.length);
+        form.setFieldValue("quantity", usersInDivision.length);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
 
   useEffect(() => {
     if (!id) return;
     getInfoDivision();
   }, [id]);
+
   useEffect(() => {
-    getLitUser();
+    getLitUser(id);
   }, [id]);
 
   if (loading) {
@@ -77,7 +99,7 @@ function DivisionForm() {
         layout="vertical"
         autoComplete="off"
         onFinish={handleSubmit}
-        initialValues={data}
+        initialValues={{ ...data, quantity: userCount }}
       >
         <Row gutter={24}>
           <Col xs={24} lg={12}>
@@ -113,13 +135,11 @@ function DivisionForm() {
               <Form.Item
                 name="quantity"
                 label="Quantity"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
-                <Input disabled />
+                <Input 
+                  disabled 
+                  value={userCount}
+                />
               </Form.Item>
             </Col>
           )}
